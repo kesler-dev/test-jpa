@@ -1,0 +1,17 @@
+<!--
+  ~ Copyright 2018 Russian Post
+  ~
+  ~ This source code is Russian Post Confidential Proprietary.
+  ~ This software is protected by copyright. All rights and titles are reserved.
+  ~ You shall not use, copy, distribute, modify, decompile, disassemble or reverse engineer the software.
+  ~ Otherwise this violation would be treated by law and would be subject to legal prosecution.
+  ~ Legal use of the software provides receipt of a license from the right holder only.
+  -->
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <include file="1.0/initial-schema.xml" relativeToChangelogFile="true"/>
+    <include file="1.0/update_seq.xml" relativeToChangelogFile="true"/>
+</databaseChangeLog>

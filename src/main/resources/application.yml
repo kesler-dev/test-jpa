@@ -1,0 +1,30 @@
+spring:
+  #  profiles:
+  #    include: ["authActive"]
+  main:
+    allow-bean-definition-overriding: true
+  liquibase:
+    change-log: classpath:db/changelog/databaseChangeLog.xml
+    default-schema: test
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/mainoffice?currentSchema=test
+    username: mainoffice
+    password: mainoffice
+  jpa:
+    properties:
+      hibernate:
+        generate_statistics: false
+        order_inserts: true
+        jdbc:
+          batch_size: 20
+        default_schema: test
+        temp:
+          use_jdbc_metadata_defaults: false
+    database: postgresql
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+    #      * Register OpenEntityManagerInViewInterceptor. Binds a JPA EntityManager to the
+    #      * thread for the entire processing of the request.
+    open-in-view: false

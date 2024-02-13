@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Copyright 2018 Russian Post
+  ~
+  ~ This source code is Russian Post Confidential Proprietary.
+  ~ This software is protected by copyright. All rights and titles are reserved.
+  ~ You shall not use, copy, distribute, modify, decompile, disassemble or reverse engineer the software.
+  ~ Otherwise this violation would be treated by law and would be subject to legal prosecution.
+  ~ Legal use of the software provides receipt of a license from the right holder only.
+  -->
+
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="initial-nsi-table" author="artemdyshlyuk">
+        <sql>
+            create table if not exists nsi
+            (
+            id bigserial not null
+            constraint nsi_pkey
+            primary key,
+            name varchar(45) not null,
+            name_en varchar(45),
+            description text,
+            code varchar(45) default 0 not null
+            );
+
+            create unique index if not exists nsi_code_uindex
+            on nsi (code);
+
+            create unique index if not exists nsi_name_uindex
+            on nsi (name);
+        </sql>
+    </changeSet>
+    <changeSet id="initial-field-table" author="artemdyshlyuk">
+        <sql>
+            create table if not exists field
+            (
+            id bigserial not null
+            constraint field_pkey
+            primary key,
+            id_nsi bigint
+            constraint id_nsi
+            references nsi,
+            name varchar(45) not null,
+            field_type varchar(45) not null,
+            is_uc boolean default false not null,
+            fk bigint,
+            is_not_null boolean default false not null,
+            is_uniq boolean,
+            is_multivalue boolean
+            );
+        </sql>
+    </changeSet>
+    <changeSet id="initial-cell-table" author="artemdyshlyuk">
+        <sql>
+            create table if not exists cell
+            (
+            id bigserial not null
+            constraint cell_pkey
+            primary key,
+            id_field bigint
+            constraint id_field
+            references field,
+            value text,
+            since_version integer not null,
+            delete_version integer,
+            row_number integer
+            );
+        </sql>
+    </changeSet>
+    <changeSet id="change-field-name-to-number" author="artemdyshlyuk">
+        <sql>
+            create table if not exists link
+            (
+                id bigserial
+                constraint link_pk
+                primary key,
+                id_dest_cell bigint
+                constraint link_cell_id_fk
+                references cell,
+                row_number int
+            );
+        </sql>
+    </changeSet>
+</databaseChangeLog>
